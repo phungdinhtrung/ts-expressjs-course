@@ -1,19 +1,27 @@
-
-import express, { Express, Request, Response } from 'express'
-import path from 'path'
+import express, { Express } from 'express'
+import Middleware from './middleware/app.middleware'
+import Routes from './router/index'
 import dotenv from 'dotenv'
 dotenv.config()
 
-import cors from 'cors'
-const port = process.env.SERVER_PORT || 3000
+const port = process.env.PORT || 3000
+import { dbInit } from './config/db.connect'
 
 
-const app: Express = express()
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors())
-app.use(express.json())
+class App {
+    public app: Express = express()
+
+    constructor() {
+        this.app = express()
+        Middleware.init(this)
+        Routes.init(this)
+        dbInit()
+    }
+}
 
 
+const app = new App().app
 app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at port :${port}`);
+    console.log(`⚡️[server] is listenning on port ${port}`);
 });
+
