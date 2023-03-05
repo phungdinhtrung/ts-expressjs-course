@@ -18,7 +18,6 @@ class UserModel {
         return await PgDataSource.getRepository(User).findOneBy({ id: user_id})
     }
 
-
     // Update
     static async update (user_id: any, user_edit: any): Promise <any> {
         const user = await PgDataSource.getRepository(User).findOneBy({ id: user_id})

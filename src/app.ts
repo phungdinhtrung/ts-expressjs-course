@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const port = process.env.PORT || 3000
-import { dbInit } from './config/db.connect'
+import { dbConnect } from './config/db.connect'
 
 
 class App {
@@ -15,12 +15,13 @@ class App {
         this.app = express()
         Middleware.init(this)
         Routes.init(this)
-        dbInit()
+        dbConnect()
     }
 }
 
 
 const app = new App().app
+
 app.listen(port, () => {
     console.log(`⚡️[server] is listenning on port ${port}`);
 });
